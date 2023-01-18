@@ -1,0 +1,268 @@
+\documentclass[12pt]{article}
+
+\usepackage{bm,graphicx, amssymb, amsmath}
+\usepackage[margin=1 in]{geometry}
+\usepackage{mathtools}
+\usepackage{epstopdf}
+\usepackage{enumitem}
+\usepackage{color}
+
+\newcommand{\ds}{\displaystyle}
+\newcommand{\B}[1]{{\bm #1}}
+\newcommand{\U}[1]{{\hat{\bm #1}}}
+\newcommand{\T}{^{\mbox{\tiny T}}}
+
+%\thispagestyle{empty}
+
+\begin{document}
+
+\newif\ifsolution    % Declaration, defaults to false
+
+%% Comment out this line to hide solutions
+%\solutiontrue
+
+\begin{center}{\bf AERO-222: Introduction to Aerospace Computation, Fall 2021\\ Homework \#1, Due Date: Wednesday, September 22, 2021} \vspace{0.5cm}
+
+\textbf{\underline{Show all work and justify your answers!}} \vspace{0.5cm}
+\end{center}
+
+{\Large \textbf{Instructions}}
+
+\begin{itemize}
+	\item \textit{This homework contains both handwritten and coding problems and shall be submitted according to the following guidelines.}
+	\item \textit{Hardcopy:}
+	\begin{itemize}
+	    \item \textit{Due on Canvas at 11:59 PM on the day of the deadline.}
+	    \item \textit{Shall include screenshots of any hand-written work.}
+	    \item \textit{For coding problems, the hardcopy shall include any relevant derivations and emphasize the final results (i.e. boxed, highlighted, etc.).}
+	    \item \textit{Shall be submitted as a single file according to the provided template with the following naming scheme:} ``LastnameHW\#.pdf"
+	\end{itemize}
+	\item \textit{Coding Submission:}
+	\begin{itemize}
+	    \item \textit{Due on Canvas at 11:59 PM on the day of the deadline.}
+	    \item \textit{Shall be submitted as a single file according to the provided template with the following naming scheme:} ``LastnameHW\#.py"
+	    \item \textit{The script shall print out all outputs asked for in the problem}.
+	\end{itemize}
+    \item \textit{Late submissions will be accepted with a 10 point deduction per day late.}
+\end{itemize}
+\hrulefill
+
+\begin{description}
+\item[1. Round-off and Truncation Error (10 pts) By-hand.] Write a verbal description of the definition of round-off error and truncation error. Also,
+    \begin{itemize}
+   	\item Describe when each may dominate.
+   	\item Describe a way to minimize each.
+    \end{itemize}
+    
+    \color{red}
+    \ifsolution
+    {\bf Solution}:\\ Truncation Error : Errors caused by fact that the expression/value used approximates the true (e.g., truncated Taylor series, approximated formulae in general, as in Pad\'e). Truncation error increases when the model adopted badly approximates the true model. Often, the error associated with approximated models depend on the step size adopted. Larger step size produce large truncation errors and vice-versa.\\ Round-off Error : Error due to floating-point numbers being expressed with a fixed available number of digits. This kind of error generally dominates for extremely small or extremely large numbers that cause information to be lost due to this fixed number of digits. Allocate more memory when storing numbers to reduce this error.
+    \fi
+    \color{black}
+
+\item[2. Round-off Error (10 pts) Code.] Write a script to:
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Evaluate the cubic monomial, $p_3 (x)$, at $x = 1.35$, using default machine precision and again using only three significant digits at each arithmetic operation. Calculate the absolute and relative error of the final result:
+    \begin{equation*}
+        p_3 (x) = 2.32 \, x^3 + 2.08 \, x^2 - 4.86 \, x + 8.33
+    \end{equation*}
+    \item Repeat part (a) but do it with \emph{nested multiplication}. Compare errors. Which takes fewer operations? The nested form is:
+    \begin{equation*}
+        p_3 (x) = [(2.32 \, x + 2.08) \, x - 4.86] \, x + 8.33
+    \end{equation*}
+    \end{enumerate}
+    
+    \color{red}
+    \ifsolution
+    {\bf Solution}:\\
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+    \item With default machine precision:
+    \begin{equation*}
+        2.15 \times 1.32^3 - 2.81 \times 1.32^2 + 4.51 \times 1.32 - 10.33 = -4.3280128
+    \end{equation*}
+    With rounding to 3 sig. fig in between operations (powers are treated as 1 operation):
+    \begin{equation*}
+    \begin{split}
+    2.15 \times 1.32^3 - 2.81 \times 1.32^2 + 4.51 \times 1.32 - 10.33 &= -4.33     \\
+    \text{Absolute Error} &= 1.9872\times10^{-3} \\
+    \text{Relative Error} &= 4.5915\times10^{-4}	\\
+    \text{Number of Steps} &= 9
+    \end{split}
+    \end{equation*}
+    \item With default machine precision:
+        \begin{equation*}
+            [(2.15 x - 2.81) x + 4.51] x - 10.33 = -4.3280128
+        \end{equation*}
+        With rounding to 3 sig. fig in between operations:
+        \begin{equation*}
+        \begin{split}
+        [(2.15 x - 2.81) x + 4.51] x - 10.33 &= -4.32 \\
+    \text{Absolute Error} &= 8.0128\times10^{-3} \\
+    \text{Relative Error} &= 1.8514\times10^{-3} \\
+    \text{Number of Steps} &= 6
+    \end{split}
+    \end{equation*}
+    \end{enumerate}
+    The first approach is more accurate but requires more operations.
+    \fi
+    \color{black}
+    
+\item[3. Truncation Error (20 pts) Code.] Evaluate $f (x) = e^{-4}$ to four digits of precision (chopping) using the following two approaches:
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+    \item $e^{-4} = \ds\sum^7_{k = 0} \dfrac{(-4)^k}{k!} = \ds\sum^7_{k = 0} \dfrac{(-1)^k 4^k}{k!}$
+    \item $e^{-4} = \dfrac{1}{e^4} \approx \dfrac{1}{\ds\sum^7_{k = 0} \dfrac{(4)^k}{k!}}$
+    \end{enumerate}
+    Note that the true value to four digits of precision is $1.8316 \times 10^{-2}$. Which formula gives more accurate results and why? Plot the error of each approach as a function of iteration number.
+
+    \color{red}
+    \ifsolution
+    {\bf Solution}:
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+    \item $1-4+8-10.67+10.67-8.53+5.69-3.25 = -1.0900$
+    \item $1/(1-4+8-10.67+10.67-8.53+5.69-3.25)  = 1.930 \times 10^{-2}$
+    \end{enumerate}
+    The actual value is $1.8316 \times 10^{-2}$ to 4 digits of precision. The second method is more accurate because it does not oscillate about the value, but instead always stays smaller than 1 and larger than 0. Thus, the truncation error of the second method is lower for the same number of steps.
+    \fi
+    \color{black}
+    
+\item[4. Taylor Series (20 pts) By-hand.] Expand the function, $f (x) = x^3 + \cos x$, by Taylor series up to degree 3 for the following cases:
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+	\item centered at $x_0 = 4$ and evaluated at $x_1 = x_0 - 0.6$;
+	\item centered at $x_0 = 3$ and evaluated at $x_1 = x_0 + 0.1$.
+    \end{enumerate}
+
+    \color{red}
+    \ifsolution
+    {\bf Solution}:\\
+    First write the general form of the Taylor polynomial for clarity:
+    \begin{equation*}
+        f(x) \approx f(x_0) + f(x_0)'(x-x_0)+ \dfrac{f(x_0)''(x-x_0)^2}{2!}+ \dfrac{f(x_0)'''(x-x_0)^3}{3!}
+    \end{equation*}
+    Then insert the given equation:
+    \begin{equation*}
+        f(x) \approx x_0^4+\sin x_0 + (4x_0^3+\cos x_0)(x-x_0)+ \dfrac{(12x_0^2-\sin x_0)(x-x_0)^2}{2!}+ \dfrac{(24x_0-\cos x_0 )(x-x_0)^3}{3!}
+    \end{equation*}
+    Insert given values:
+
+    \item a. centered $x_0=4$ and evaluated $x_0+0.2=4.2$
+    \begin{equation*}
+        f(x) \approx 4^4+\sin 4 + (4(4)^3+\cos 4)(4.2-4)+ \dfrac{(12(4)^2-\sin 4)(4.2-4)^2}{2!}+ \dfrac{(24(4)-\cos 4 )(4.2-4)^3}{3!}
+    \end{equation*}
+    \textbf{answer:} $310.296$
+
+    \item b. centered $x_0=3$ and evaluated $x_0-0.7=2.3$
+    \begin{equation*}
+        f(x) \approx 3^4+\sin 3 + (4(3)^3+\cos 3)(2.3-3)+ \dfrac{(12(3)^2-\sin 3)(2.3-3)^2}{2!}+ \dfrac{(24(3)-\cos 3 )(2.3-3)^3}{3!}
+    \end{equation*}
+    \textbf{answer:} $28.48$
+    \fi
+    \color{black}
+
+\item[5. Variables and Computer Precision (10 pts) By-hand.]  Answer the following questions:
+	\begin{enumerate}[label=\textbf{(\alph*)}]
+		\item Which can store a larger number, a signed int or unsigned int?
+		\item Which uses more memory, a float or double? Which is more precise?
+		\item If I'm trying to establish if two integers are equal, what's the easiest way to compare their values in code? Write the statement that would achieve this?.
+		\item If I'm trying to establish if two real numbers (double or float) are equal, what's the ``correct" way to compare their values in code? Write the statement that would achieve this.
+		\item What is Python default machine precision?
+	\end{enumerate}
+	
+	\color{red}
+	\ifsolution
+	{\bf Solution}:
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+		\item unsigned int
+		\item double, double
+		\item a == b
+		\item $|a - b| < \epsilon$
+		\item Double (64 bits or I will also accept 53 bit if they are talking about the mantissa), 9223372036854775807, (\verb"sys.maxsize") 1.7976931348623157e+308 (\verb"sys.float_info.max") [10e+4931 with numpy]
+	\end{enumerate}
+	\fi
+	\color{black}
+
+\item[6. Base Conversion (10 pts) By-hand.] Show all steps:
+\begin{enumerate}[label=\textbf{(\alph*)}]
+		\item Convert 723 from decimal to binary.
+		\item Convert 0.1 from decimal to binary using 1 byte (8 bits).
+		\item Does adding zeros to the back (ones side) of a base 10 integer change the value? What about a base 2 (binary) integer?
+		\item Now consider the value to be a decimal. Does anything change?
+	\end{enumerate}
+	
+	\color{red}
+	\ifsolution
+	{\bf Solution}:
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+		\item 1011010011
+		\item 0.00011001
+		\item Yes, yes
+		\item No (the number is unchanged)
+	\end{enumerate}
+	\fi
+	\color{black}
+
+\item[7. Error Propagation (20 pts) By-hand.] Consider the following two statements,
+\begin{align*}
+    z &= 2 x - y + \sin(x y^2) \\
+    w &= e^z - 2 (z - 1)
+\end{align*}
+with mean values $\mu_x = 2$ and $\mu_y = 1$, and standard deviations $\sigma_x = 0.03$ and $\sigma_y = 0.01$. Estimate the following parameters using four significant digits: 
+	\begin{enumerate}[label=\textbf{(\alph*)}]
+	\item $\mu_w$
+	\item $\sigma_w$
+	\end{enumerate}
+
+    \color{red}
+    \ifsolution
+    {\bf Solution}:\\
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+    
+    \item $\mu_z=2\mu_x-\mu_y+sin(\mu_x\mu_y^2)=3.909\\
+    \mu_w=e^{\mu_z} - 2(\mu_z - 1)=44.03$
+    
+    \item Partial derivatives:
+    \begin{equation*}
+       \frac{\partial Z}{\partial X}\Bigr\rvert_{\mu_x,\mu_y}=2+(cos(\mu_x\mu_y^2)\mu_y^2)=1.584;\:
+       \frac{\partial Z}{\partial Y}\Bigr\rvert_{\mu_x,\mu_y}=-1+(2\mu_y cos(\mu_x \mu_y^2) \mu_x=-2.665;\\
+    \end{equation*}
+    \begin{equation*}
+       \frac{\partial W}{\partial Z}\Bigr\rvert_{\mu_z}=e^{\mu_z}-2=47.85;
+    \end{equation*}
+    Linearize Z using first order Taylor expansion around $\mu_x, \mu_y$
+    
+        \begin{equation*}
+       Z=2\mu_x-\mu_y+sin(\mu_x\mu_y^2)+(X-\mu_x)\frac{\partial Z}{\partial X}\Bigr\rvert_{\mu_x,\mu_y}+(Y-\mu_y)\frac{\partial Z}{\partial Y}\Bigr\rvert_{\mu_x,\mu_y};
+    \end{equation*}
+    
+    Linearize W using first order Taylor expansion around $\mu_z$
+    
+        \begin{equation*}
+       W=e^{\mu_z} - 2(\mu_z - 1)+(Z-\mu_z)\frac{\partial W}{\partial Z}\Bigr\rvert_{\mu_z};
+    \end{equation*}
+    
+    Apply the variance in Z:
+    
+        \begin{equation*}
+       VAR[Z]=VAR[X]\left(\frac{\partial Z}{\partial X}\Bigr\rvert_{\mu_x,\mu_y}\right)^2+VAR[Y]\left(\frac{\partial Z}{\partial Y}\Bigr\rvert_{\mu_x,\mu_y}\right)^2;
+    \end{equation*}
+    
+      Apply the variance in W:
+      \begin{equation*}
+       VAR[W]=VAR[Z]\left(\frac{\partial W}{\partial Z}\Bigr\rvert_{\mu_z}\right)^2;
+    \end{equation*}
+    
+    Substitute variance Z in W:
+      \begin{equation*}
+       VAR[W]=VAR[X]\left(\frac{\partial W}{\partial Z}\Bigr\rvert_{\mu_z}\frac{\partial Z}{\partial X}\Bigr\rvert_{\mu_x,\mu_y}\right)^2+VAR[Y]\left(\frac{\partial W}{\partial Z}\Bigr\rvert_{\mu_z}\frac{\partial Z}{\partial Y}\Bigr\rvert_{\mu_x,\mu_y}\right)^2;
+    \end{equation*}
+    
+      \begin{equation*}
+       \sigma_w^2=\sigma_x^2\left(\frac{\partial W}{\partial Z}\Bigr\rvert_{\mu_z}\frac{\partial Z}{\partial X}\Bigr\rvert_{\mu_x,\mu_y}\right)^2+\sigma_y^2\left(\frac{\partial W}{\partial Z}\Bigr\rvert_{\mu_z}\frac{\partial Z}{\partial Y}\Bigr\rvert_{\mu_x,\mu_y}\right)^2=3.924;
+    \end{equation*}
+    \begin{equation*}
+       \sigma_w=1.981;
+    \end{equation*}
+    \end{enumerate}
+    \fi
+    \color{black}
+\end{description}
+\end{document}
