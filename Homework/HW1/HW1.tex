@@ -61,7 +61,7 @@ Use the following 3 methods:
    	\item Regula-Falsi method
     \end{itemize}
 
-    These methods require a set of starting points/bounds. Use $x_1 = -2$ and $x_2 = +2$, which will meet the initial requirements for all 3 methods. For each method, calculate and plot $f(x_{n})$ as a function of the iteration number $n$. Which method converges within the given tolerance in the fewest iterations?
+    These methods require a set of starting points/bounds. Use $x_1 = -2$ and $x_2 = +2$, which will meet the initial requirements for all 3 methods. For each method, calculate and plot $f(x_{n})$ as a function of the iteration number $n$. Which method converges fastest?
     
     \color{red}
     \ifsolution
@@ -124,12 +124,12 @@ Use the following 3 methods:
     \fi
     \color{black}
     
-\item[3. Truncation Error \color{red} (Coding Problem) \color{black} (20 pts)] Evaluate $f (x) = e^{-5}$ to four digits of precision (chopping) using the following two approaches:
+\item[3. Truncation Error \color{red} (Coding Problem) \color{black} (20 pts)] Evaluate $f (x) = e^{-5}$ to five digits of precision using the following two approaches:
     \begin{enumerate}[label=\textbf{(\alph*)}]
-    \item $e^{-5} = \ds\sum^7_{k = 0} \dfrac{(-5)^k}{k!} = \ds\sum^7_{k = 0} \dfrac{(-1)^k 5^k}{k!}$
-    \item $e^{-5} = \dfrac{1}{e^5} \approx \dfrac{1}{\ds\sum^7_{k = 0} \dfrac{(5)^k}{k!}}$
+    \item $e^{-5} = \ds\sum^{10}_{k = 0} \dfrac{(-5)^k}{k!} = \ds\sum^{10}_{k = 0} \dfrac{(-1)^k 5^k}{k!}$
+    \item $e^{-5} = \dfrac{1}{e^5} \approx \dfrac{1}{\ds\sum^{10}_{k = 0} \dfrac{(5)^k}{k!}}$
     \end{enumerate}
-    Note that the true value to four digits of precision is $1.8316 \times 10^{-2}$. Which formula gives more accurate results and why? Plot the error of each approach as a function of iteration number.
+    Note that the true value to five digits of precision is $1.8316 \times 10^{-2}$. Which formula gives more accurate results and why? Plot the error of each approach as a function of iteration number.
 
     \color{red}
     \ifsolution
@@ -223,42 +223,42 @@ Use the following 3 methods:
 	\fi
 	\color{black}
 
-\item[7. Error Propagation (20 pts)] Consider the following two statements,
-\begin{align*}
-    z &= 2 x - y + \sin(x y^2) \\
-    w &= e^z - 2 (z^2 - 1)
-\end{align*}
-with mean values $\mu_x = 3$ and $\mu_y = 2$, and standard deviations $\sigma_x = 0.02$ and $\sigma_y = 0.01$. Estimate the following parameters using four significant digits: 
-	\begin{enumerate}[label=\textbf{(\alph*)}]
-	\item $\mu_w$
-	\item $\sigma_w$
-	\end{enumerate}
+% \item[7. Error Propagation (20 pts)] Consider the following two statements,
+% \begin{align*}
+%     z &= 2 x - y + \sin(x y^2) \\
+%     w &= e^z - 2 (z^2 - 1)
+% \end{align*}
+% with mean values $\mu_x = 3$ and $\mu_y = 2$, and standard deviations $\sigma_x = 0.02$ and $\sigma_y = 0.01$. Estimate the following parameters using four significant digits: 
+% 	\begin{enumerate}[label=\textbf{(\alph*)}]
+% 	\item $\mu_w$
+% 	\item $\sigma_w$
+% 	\end{enumerate}
 
-    \color{red}
-    \ifsolution
-    {\bf Solution}:\\
-    \begin{enumerate}[label=\textbf{(\alph*)}]
+%     \color{red}
+%     \ifsolution
+%     {\bf Solution}:\\
+%     \begin{enumerate}[label=\textbf{(\alph*)}]
     
-    \item $\mu_z = 2 \mu_x - \mu_y + \sin(\mu_x \, \mu_y^2) = 3.4634\\
-    \mu_w = e^{\mu_z} - 2 (\mu_z^2 - 1) = 9.9355$
+%     \item $\mu_z = 2 \mu_x - \mu_y + \sin(\mu_x \, \mu_y^2) = 3.4634\\
+%     \mu_w = e^{\mu_z} - 2 (\mu_z^2 - 1) = 9.9355$
     
-    \item Partial derivatives:
-    \begin{align*}
-       \frac{\partial z}{\partial x}\Bigr\rvert_{\mu_x,\mu_y} &= 2 + \mu_y^2 \, \cos(\mu_x \mu_y^2) = 5.375 \\
-       \frac{\partial z}{\partial y}\Bigr\rvert_{\mu_x,\mu_y} &= -1 + 2\mu_x \mu_y \, \cos(\mu_x \mu_y^2) = 9.126 \\
-       \frac{\partial w}{\partial z}\Bigr\rvert_{\mu_z} &= e^{\mu_z} - 4z = 18.072;
-    \end{align*}
-    Then, the standard deviation of $z$ becomes,
-        \begin{equation*}
-       \sigma_z = \sqrt{\frac{\partial z}{\partial x}\Bigr\rvert_{\mu_x,\mu_y}^2 \, \sigma_x^2 + \frac{\partial z}{\partial y}\Bigr\rvert_{\mu_x,\mu_y}^2 \, \sigma_y^2} = 0.14102
-    \end{equation*}
-    and the standard deviation of $w$ is,
-        \begin{equation*}
-       \sigma_w = \sqrt{\frac{\partial w}{\partial z}\Bigr\rvert_{\mu_z}^2 \, \sigma_z^2} = 2.549
-    \end{equation*}
+%     \item Partial derivatives:
+%     \begin{align*}
+%        \frac{\partial z}{\partial x}\Bigr\rvert_{\mu_x,\mu_y} &= 2 + \mu_y^2 \, \cos(\mu_x \mu_y^2) = 5.375 \\
+%        \frac{\partial z}{\partial y}\Bigr\rvert_{\mu_x,\mu_y} &= -1 + 2\mu_x \mu_y \, \cos(\mu_x \mu_y^2) = 9.126 \\
+%        \frac{\partial w}{\partial z}\Bigr\rvert_{\mu_z} &= e^{\mu_z} - 4z = 18.072;
+%     \end{align*}
+%     Then, the standard deviation of $z$ becomes,
+%         \begin{equation*}
+%        \sigma_z = \sqrt{\frac{\partial z}{\partial x}\Bigr\rvert_{\mu_x,\mu_y}^2 \, \sigma_x^2 + \frac{\partial z}{\partial y}\Bigr\rvert_{\mu_x,\mu_y}^2 \, \sigma_y^2} = 0.14102
+%     \end{equation*}
+%     and the standard deviation of $w$ is,
+%         \begin{equation*}
+%        \sigma_w = \sqrt{\frac{\partial w}{\partial z}\Bigr\rvert_{\mu_z}^2 \, \sigma_z^2} = 2.549
+%     \end{equation*}
     
-    \end{enumerate}
-    \fi
-    \color{black}
+%     \end{enumerate}
+%     \fi
+%     \color{black}
 \end{description}
 \end{document}
