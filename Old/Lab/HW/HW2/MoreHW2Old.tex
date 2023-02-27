@@ -68,9 +68,9 @@ N_{\varepsilon_{x}} = 9 \text{(may also vary, but will always be larger than par
 \end{equation*}
 
 \begin{figure}[h!]
-	\centering\includegraphics[width=4.5in]{HW2Figs/HW2P1.png}
+	\centering\includegraphics[width=4.5in]{HW2P1.png}
 	\caption{The general trend should look like this, all solutions converge to zero.}
-    \centering\includegraphics[width=4.5in]{HW2Figs/HW2P1b.png}
+    \centering\includegraphics[width=4.5in]{HW2P1b.png}
 	\caption{If they plot on a log scale it should follow a trend similar to this}
 	\label{fig:linearMethods}
 \end{figure}
@@ -158,11 +158,11 @@ N_{\varepsilon_{x}} = 9 \text{(may also vary, but will always be larger than par
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item[3. An Aerospace Application (15 pts) Code.] The following question brings together elements from multiple methods we've covered so far. An Airbus A320 is flying at Mach 0.7. It's Pitot tubes, shown in Figure \ref{fig:Pitot},  measure the total, or stagnation, pressure (pressure when the air hits and is stopped by the tube) as well as the static free-stream pressure.
 
-\begin{figure}[h!]
-	\centering\includegraphics[width=4.5in]{HW2Figs/pitot}
-	\caption{Pitot-Static Tubes: Used to measure the ratio of total pressure to static pressure for determining aircraft airspeed.}
-	\label{fig:Pitot}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering\includegraphics[width=4.5in]{HW2Figs/pitot}
+% 	\caption{Pitot-Static Tubes: Used to measure the ratio of total pressure to static pressure for determining aircraft airspeed.}
+% 	\label{fig:Pitot}
+% \end{figure}
 
 The ratio of total to static pressure is determined to be: $p_0/p = 1.289$. The following equation relates this change in pressure to the inlet Mach number, $M$, and $\gamma$, the heat capacity ratio:
 
@@ -198,7 +198,7 @@ Based on the given pressure ratio and Mach number, determine the value of $\gamm
 	
 	Number of Iterations = 3
 	
-	$x_{Newton = 0.96498$
+	$x_{Newton} = 0.96498$
 	
 	$f(x_{Secant}) = -2.7110 \times 10^{-9}$
 \end{enumerate}
@@ -215,10 +215,10 @@ Based on the given pressure ratio and Mach number, determine the value of $\gamm
 \ifsolution
 \color{red}
 {\bf Solution:}\\
-\begin{figure}[ht]
-	\centering\includegraphics[scale=0.45]{HW2Figs/HW12P2ab.png}
-\label{fig:5ab}
-\end{figure}
+% \begin{figure}[ht]
+% 	\centering\includegraphics[scale=0.45]{HW12P2ab.png}
+% \label{fig:5ab}
+% \end{figure}
 \color{black}
 \fi
 	
@@ -265,9 +265,9 @@ Based on the given pressure ratio and Mach number, determine the value of $\gamm
 	        	
 	        Plugging this equation into Python and plotting, we can see that $\exists x \in [-3,3], \; |g'(x)| > 1 \implies$ FPI and the Newton Method are not guaranteed to converge on the interval [-3,3].
 	        	
-	        \begin{figure}[ht]	\centering\includegraphics[scale=0.7]{HW2Figs/AERO222_HW2_P5.png}
-	        	\caption{$\left|g'(x)\right|$ for $x \in \left[-3,3\right]$}
-	        \end{figure}
+	        % \begin{figure}[ht]	\centering\includegraphics[scale=0.7]{AERO222_HW2_P5.png}
+	        % 	\caption{$\left|g'(x)\right|$ for $x \in \left[-3,3\right]$}
+	        % \end{figure}
 	
 	        \item The order of convergence and asymptotic error constant can be approximated as:
    	
